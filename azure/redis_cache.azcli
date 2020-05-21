@@ -1,0 +1,27 @@
+#az login 
+
+$az_sub_name = 'Visual Studio Enterprise with MSDN'
+$az_location = 'West Europe'
+$az_resource_group = 'redis_test_rg'
+
+$az_redis_name = 'redis-test-cache-zzaqa'
+
+az account set --subscription $az_sub_name
+
+az group create --name $az_resource_group --location $az_location
+
+az redis create --location $az_location --name $az_redis_name --resource-group $az_resource_group --sku 'basic' --vm-size 'c0' --tags 'tag=sometag tag2=anothertag'
+
+#az redis list-keys --resource-group $az_resource_group --name $az_redis_name
+
+$redis = ($(az redis show --name $az_redis_name --resource-group $az_resource_group --query [hostName,enableNonSslPort,port,sslPort] --output tsv))
+
+$keys = ($(az redis list-keys --name $az_redis_name --resource-group $az_resource_group --query [primaryKey,secondaryKey] --output tsv))
+
+$connection_string_1 = $redis[0] + ",abortConnect=false,ssl=true,password=" + $keys[0]
+$connection_string_2 = $redis[0] + ",abortConnect=false,ssl=true,password=" + $keys[1]
+
+
+#az redis delete -y --name $az_redis_name --resource-group $az_resource_group
+
+#az group delete -y  --resource-group $az_resource_group
