@@ -9,7 +9,7 @@ services:
     - "5672:5672"
     - "15672:15672"
   volumes:
-    - "~/data:/var/lib/rabbitmq/mnesia/"
+    - "~/data/rabbitmq:/var/lib/rabbitmq/mnesia/"
   networks:
     - devnet
 networks:
