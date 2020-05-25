@@ -3,6 +3,7 @@ services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     container_name: es01
+    restart: always
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
@@ -23,10 +24,11 @@ services:
     ports:
       - 9200:9200
     networks:
-      - elastic
+      - devnet
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     container_name: es02
+    restart: always
     environment:
       - node.name=es02
       - cluster.name=es-docker-cluster
@@ -45,10 +47,11 @@ services:
     volumes:
       - data02:/usr/share/elasticsearch/data
     networks:
-      - elastic
+      - devnet
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
     container_name: es03
+    restart: always
     environment:
       - node.name=es03
       - cluster.name=es-docker-cluster
@@ -67,8 +70,44 @@ services:
     volumes:
       - data03:/usr/share/elasticsearch/data
     networks:
-      - elastic
-
+      - devnet
+  eshq:
+    image: elastichq/elasticsearch-hq:latest
+    container_name: eshq
+    restart: always
+    ports:
+      - 8021:5000
+    networks:
+      - devnet      
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.7.0
+    container_name: logstash
+    restart: always
+    volumes:
+    - ./:/config-dir
+    - ~/logfiles:/logfiles
+    command: logstash -f /config-dir/logstash.conf 
+    ports:
+    - 5044:5044
+    - 9600:9600
+    environment:
+    - monitoring.elasticsearch.hosts=http://es01:9200
+    - xpack.monitoring.enabled=false
+    networks:
+      - devnet      
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    container_name: kibana
+    restart: always
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - ELASTICSEARCH_HOSTS=["http://es01:9200"]
+      - SERVER_HOST=0.0.0.0
+    ports:
+      - 5601:5601
+    networks:
+      - devnet      
 volumes:
   data01:
     driver: local
@@ -78,5 +117,5 @@ volumes:
     driver: local
 
 networks:
-  elastic:
-    driver: bridge
+  devnet:
+    external: true
