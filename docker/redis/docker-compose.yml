@@ -9,7 +9,12 @@ services:
       - 32768:6379  
     networks:
      - devnet
+    volumes:
+      - data:/data
 
 networks:
   devnet:
     external: true
+
+volumes:
+  data:

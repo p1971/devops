@@ -24,4 +24,4 @@ $connection_string_2 = $redis[0] + ",abortConnect=false,ssl=true,password=" + $k
 
 #az redis delete -y --name $az_redis_name --resource-group $az_resource_group
 
-#az group delete -y  --resource-group $az_resource_group
+#az group delete -y --resource-group $az_resource_group

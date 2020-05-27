@@ -14,6 +14,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       - devnet
+    volumes:
+      - data:/data/db
+      - config:/data/configdb
 
   mongo-express:
     image: mongo-express
@@ -30,3 +33,7 @@ services:
 networks:
   devnet:
     external: true
+
+volumes:
+  data:
+  config:

@@ -11,11 +11,11 @@ services:
       - 8000:8000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - data:/data
     networks:
       - devnet
 volumes:
-  portainer_data:
+  data:
 networks:
   devnet:
     external: true
