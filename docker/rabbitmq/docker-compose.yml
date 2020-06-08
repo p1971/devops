@@ -1,12 +1,20 @@
-version: "3"
+version: "3.7"
 services:
  rabbitmq:
   restart: always
   hostname: "rabbit"
   image: "rabbitmq:3-management"
+  container_name: rabbitmq
   ports:
     - "5672:5672"
     - "15672:15672"
   volumes:
-    - "./data:/var/lib/rabbitmq/mnesia/"
+     - data:/var/lib/rabbitmq
+  networks:
+    - devnet
+networks:
+  devnet:
+    external: true
 
+volumes:
+  data:    

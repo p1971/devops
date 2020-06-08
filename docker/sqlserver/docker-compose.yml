@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-CU3-ubuntu-18.04
+    container_name : sqlserver
+    restart: always
+    ports:
+    - 1433:1433
+    environment:
+    - ACCEPT_EULA=Y
+    - SA_PASSWORD=##13fZWM2LZ2C6HweF4!!
+    - TZ='Europe/London'
+    networks:
+        - devnet    
+networks:
+  devnet:
+    external: true

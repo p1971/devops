@@ -1,8 +1,9 @@
-version: '2'
+version: '3.7'
 
 services:
   portainer:
     image: portainer/portainer
+    container_name: portainer
     command: -H unix:///var/run/docker.sock
     restart: always
     ports:
@@ -10,7 +11,12 @@ services:
       - 8000:8000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-
+      - data:/data
+    networks:
+      - devnet
 volumes:
-  portainer_data:
+  data:
+networks:
+  devnet:
+    external: true
+    driver: bridge    
