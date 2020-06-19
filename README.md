@@ -16,6 +16,14 @@ I created the repo merely to help me remember how I set things up, feel free to 
 
 The `docker/setup.sh` script sets up some common configuration. 
 
+Enviroment variables are defined in `docker/common.env` - this is not committed to the repo, create one with the settings below.
+
+```bash
+SA_PASSWORD=<replace with a strong password>
+MONGO_INITDB_ROOT_PASSWORD=<replace with password>
+ME_CONFIG_MONGODB_ADMINPASSWORD=<replace with password>
+```
+
 ### Services
 
 * docker registry
@@ -30,7 +38,13 @@ The `docker/setup.sh` script sets up some common configuration.
 * rabbitmq
 * redis
 * sql server
+    * Uses the following environment settings, specify in `common.env`
+        * SA_PASSWORD
 * traefik
+* mongo
+    * Uses the following environment settings, specify in `common.env`
+        * MONGO_INITDB_ROOT_PASSWORD
+        * ME_CONFIG_MONGODB_ADMINPASSWORD
 
 ## TODO
 

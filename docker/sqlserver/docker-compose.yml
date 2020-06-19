@@ -8,8 +8,9 @@ services:
     - 1433:1433
     environment:
     - ACCEPT_EULA=Y
-    - SA_PASSWORD=##13fZWM2LZ2C6HweF4!!
-    - TZ='Europe/London'
+    - TZ='Europe/London'    
+    env_file:
+    - ../common.env
     networks:
         - devnet    
 networks:
