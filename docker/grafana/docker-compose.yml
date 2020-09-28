@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    user: "1001:1001"
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - devnet
+    volumes:
+      - /srv/docker/grafana/data:/var/lib/grafana
+networks:
+  devnet:
+    external: true

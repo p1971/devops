@@ -7,6 +7,8 @@ services:
     restart: always
     environment:
       - node.name=es01
+      - network.host=0.0.0.0
+      - http.host=0.0.0.0
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es02,es03
       - cluster.initial_master_nodes=es01,es02,es03
@@ -32,6 +34,8 @@ services:
     restart: always
     environment:
       - node.name=es02
+      - network.host=0.0.0.0
+      - http.host=0.0.0.0
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es01,es03
       - cluster.initial_master_nodes=es01,es02,es03
@@ -55,6 +59,8 @@ services:
     restart: always
     environment:
       - node.name=es03
+      - network.host=0.0.0.0
+      - http.host=0.0.0.0
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=es01,es02
       - cluster.initial_master_nodes=es01,es02,es03
